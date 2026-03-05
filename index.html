@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cansu Gold - Altın Canlı Fiyatlar</title>
+
+<style>
+  :root {
+    --gold:#B8860B; --gold-light:#D4A017; --dark:#F5ECD7; --dark2:#EDE0C4;
+    --dark3:#FDF6E3; --dark4:#E8D5A3; --text:#3D2B1F; --muted:#7A6040;
+    --green:#2E7D32; --red:#C0392B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background-color:#F5ECD7;
+    color:var(--text);
+    font-family:'Consolas','Courier New',monospace;
+    min-height:100vh;
+    overflow-x:hidden;
+    background-image: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=1600&q=80&fit=crop');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+  }
+  body::before{content:'';position:fixed;inset:0;background:linear-gradient(135deg,rgba(245,236,215,0.92) 0%,rgba(237,224,196,0.88) 50%,rgba(245,236,215,0.92) 100%);pointer-events:none;z-index:0}
+  .container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  header{padding:40px 0 32px;border-bottom:1px solid rgba(184,134,11,.3);display:flex;justify-content:space-between;align-items:flex-end}
+  .logo{font-family:'Georgia','Times New Roman',serif;font-size:34px;font-weight:900;color:var(--gold-light)}
+  .logo span{color:var(--muted);font-weight:400;font-size:14px;display:block;font-family:'Consolas','Courier New',monospace;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+  .live-badge{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+  .live-dot{width:8px;height:8px;background:#2E7D32;border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px #2E7D32}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+  .time-bar{padding:16px 0;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,.04)}
+  #current-time{font-size:13px;color:var(--gold)}
+  .error-bar{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:12px 16px;font-size:12px;color:var(--red);margin:16px 0;display:none}
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:32px 0 24px}
+  .gold-card{background:rgba(253,246,227,0.85);border:1px solid rgba(184,134,11,.25);border-radius:12px;padding:28px;backdrop-filter:blur(8px);box-shadow:0 4px 24px rgba(139,90,0,.08);position:relative;overflow:hidden;transition:border-color .3s,transform .2s}
+  .gold-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.6}
+  .gold-card:hover{border-color:rgba(201,151,58,.4);transform:translateY(-2px)}
+  .card-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+  .card-price{font-family:'Georgia','Times New Roman',serif;font-size:36px;font-weight:700;color:var(--gold-light);line-height:1;margin-bottom:10px}
+  .card-price .unit{font-size:14px;color:var(--muted);font-family:'Consolas','Courier New',monospace;font-weight:400}
+  .card-price.loading{font-size:14px;color:var(--muted);font-family:'Consolas','Courier New',monospace}
+  .card-bs{display:flex;gap:12px;margin-bottom:6px}
+  .card-bs-item{font-size:12px;color:var(--muted);letter-spacing:1px}
+  .card-bs-item span{color:var(--text);font-size:17px;font-weight:600}
+  .card-change{font-size:12px;display:flex;align-items:center;gap:4px}
+  .card-change.up{color:var(--green)}.card-change.down{color:var(--red)}
+  .card-icon{position:absolute;bottom:16px;right:20px;font-size:32px;opacity:.08}
+  @keyframes flash-up{0%{color:var(--gold-light)}30%{color:var(--green)}100%{color:var(--gold-light)}}
+  @keyframes flash-down{0%{color:var(--gold-light)}30%{color:var(--red)}100%{color:var(--gold-light)}}
+  .flash-up .card-price{animation:flash-up .8s ease}
+  .flash-down .card-price{animation:flash-down .8s ease}
+  .section-title{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);padding:24px 0 16px;border-top:1px solid rgba(255,255,255,.04)}
+  .doviz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:32px}
+  .doviz-card{background:rgba(237,224,196,0.8);border:1px solid rgba(184,134,11,.2);border-radius:12px;padding:20px 24px;backdrop-filter:blur(8px);display:flex;justify-content:space-between;align-items:center}
+  .doviz-name{font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+  .doviz-val{font-size:22px;color:var(--text);font-weight:600}
+  .doviz-chg{font-size:11px;margin-top:2px;text-align:right}
+  .alarm-panel{background:rgba(253,246,227,0.85);border:1px solid rgba(184,134,11,.25);border-radius:12px;padding:28px;margin-bottom:32px;backdrop-filter:blur(8px)}
+  .alarm-title{font-family:'Georgia','Times New Roman',serif;font-size:18px;color:var(--gold-light);margin-bottom:20px}
+  .alarm-form{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+  .form-group{display:flex;flex-direction:column;gap:6px}
+  .form-group label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+  .form-group select,.form-group input{background:rgba(232,213,163,0.8);border:1px solid rgba(184,134,11,.3);border-radius:6px;color:var(--text);font-family:'Consolas','Courier New',monospace;font-size:13px;padding:10px 14px;outline:none;min-width:140px;transition:border-color .2s}
+  .form-group select:focus,.form-group input:focus{border-color:var(--gold)}
+  .btn-alarm{background:var(--gold);color:var(--dark);border:none;border-radius:3px;font-family:'Consolas','Courier New',monospace;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;cursor:pointer;transition:background .2s,transform .1s;white-space:nowrap}
+  .btn-alarm:hover{background:var(--gold-light);transform:translateY(-1px)}
+  .alarm-list{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+  .alarm-item{background:rgba(232,213,163,0.6);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:12px;border-left:3px solid var(--gold-light);animation:slideIn .3s ease}
+  @keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+  .alarm-info{color:var(--text)}.alarm-meta{color:var(--muted);font-size:11px}
+  .btn-delete{background:none;border:1px solid rgba(224,85,85,.3);color:var(--red);border-radius:3px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Consolas','Courier New',monospace;transition:background .2s}
+  .btn-delete:hover{background:rgba(224,85,85,.1)}
+  .toast{position:fixed;top:24px;right:24px;background:rgba(253,246,227,0.95);border:1px solid var(--gold);border-radius:4px;padding:16px 20px;font-size:13px;color:var(--gold-light);z-index:9999;transform:translateX(120%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);max-width:320px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+  .toast.show{transform:translateX(0)}
+  .toast-title{font-weight:500;margin-bottom:4px;letter-spacing:1px}.toast-msg{color:var(--muted);font-size:11px}
+  .footer{padding:24px 0;border-top:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:1.5px;align-items:center}
+  .refresh-btn{background:none;border:1px solid rgba(201,151,58,.3);color:var(--gold);font-family:'Consolas','Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:3px;cursor:pointer;transition:all .2s}
+  .refresh-btn:hover{background:rgba(201,151,58,.1)}
+  @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .spinning{animation:spin .6s linear}
+  @media(max-width:600px){.cards-grid{grid-template-columns:1fr 1fr}header{flex-direction:column;align-items:flex-start;gap:12px}.alarm-form{flex-direction:column}.form-group select,.form-group input{min-width:100%}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">CANSU GOLD <span>GERÇEK ZAMANLI KAPALI ÇARŞI FİYATLARI</span></div>
+    <div class="live-badge"><div class="live-dot"></div>CANLI</div>
+  </header>
+  <div class="time-bar">
+    <span id="last-update">Veri yükleniyor...</span>
+    <span id="current-time">--:--:--</span>
+  </div>
+  <div class="error-bar" id="error-bar"></div>
+
+  <div class="cards-grid">
+    <div class="gold-card" id="card-gram"><div class="card-label">Gram Altın</div><div class="card-bs"><div class="card-bs-item">Alış<br><span id="buy-gram">—</span></div><div class="card-bs-item">Satış<br><span id="sell-gram">—</span></div></div><div class="card-change" id="change-gram">—</div><div class="card-icon">◈</div></div>
+    <div class="gold-card" id="card-ceyrek"><div class="card-label">Çeyrek Altın</div><div class="card-bs"><div class="card-bs-item">Alış<br><span id="buy-ceyrek">—</span></div><div class="card-bs-item">Satış<br><span id="sell-ceyrek">—</span></div></div><div class="card-change" id="change-ceyrek">—</div><div class="card-icon">◈</div></div>
+    <div class="gold-card" id="card-yarim"><div class="card-label">Yarım Altın</div><div class="card-bs"><div class="card-bs-item">Alış<br><span id="buy-yarim">—</span></div><div class="card-bs-item">Satış<br><span id="sell-yarim">—</span></div></div><div class="card-change" id="change-yarim">—</div><div class="card-icon">◈</div></div>
+    <div class="gold-card" id="card-tam"><div class="card-label">Tam Altın</div><div class="card-bs"><div class="card-bs-item">Alış<br><span id="buy-tam">—</span></div><div class="card-bs-item">Satış<br><span id="sell-tam">—</span></div></div><div class="card-change" id="change-tam">—</div><div class="card-icon">◈</div></div>
+    <div class="gold-card" id="card-ons"><div class="card-label">Ons Altın</div><div class="card-bs"><div class="card-bs-item">Alış<br><span id="buy-ons">—</span></div><div class="card-bs-item">Satış<br><span id="sell-ons">—</span></div></div><div class="card-change" id="change-ons">—</div><div class="card-icon">◈</div></div>
+    <div class="gold-card" id="card-cumhuriyet"><div class="card-label">Cumhuriyet Altını</div><div class="card-bs"><div class="card-bs-item">Alış<br><span id="buy-cumhuriyet">—</span></div><div class="card-bs-item">Satış<br><span id="sell-cumhuriyet">—</span></div></div><div class="card-change" id="change-cumhuriyet">—</div><div class="card-icon">◈</div></div>
+  </div>
+
+  <div class="section-title">Döviz Kurları</div>
+  <div class="doviz-grid">
+    <div class="doviz-card"><div><div class="doviz-name">USD / TRY</div><div class="doviz-val" id="usd-val">—</div></div><div><div class="doviz-chg" id="usd-chg" style="color:var(--muted)">—</div></div></div>
+    <div class="doviz-card"><div><div class="doviz-name">EUR / TRY</div><div class="doviz-val" id="eur-val">—</div></div><div><div class="doviz-chg" id="eur-chg" style="color:var(--muted)">—</div></div></div>
+    <div class="doviz-card"><div><div class="doviz-name">GBP / TRY</div><div class="doviz-val" id="gbp-val">—</div></div><div><div class="doviz-chg" id="gbp-chg" style="color:var(--muted)">—</div></div></div>
+    <div class="doviz-card"><div><div class="doviz-name">ONS / USD</div><div class="doviz-val" id="xau-val">—</div></div><div><div class="doviz-chg" id="xau-chg" style="color:var(--muted)">—</div></div></div>
+  </div>
+
+  <div class="section-title">Fiyat Alarmı</div>
+  <div class="alarm-panel">
+    <div class="alarm-title">🔔 Alarm Kur</div>
+    <div class="alarm-form">
+      <div class="form-group"><label>Altın Türü</label>
+        <select id="alarm-type">
+          <option value="gram">Gram Altın</option>
+          <option value="ceyrek">Çeyrek Altın</option>
+          <option value="yarim">Yarım Altın</option>
+          <option value="tam">Tam Altın</option>
+          <option value="ons">Ons Altın</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Koşul</label>
+        <select id="alarm-cond"><option value="above">Üstüne çıkarsa</option><option value="below">Altına düşerse</option></select>
+      </div>
+      <div class="form-group"><label>Hedef Fiyat</label><input type="number" id="alarm-price" placeholder="örn: 3500" step="1"></div>
+      <button class="btn-alarm" onclick="addAlarm()">ALARM EKLE</button>
+    </div>
+    <div class="alarm-list" id="alarm-list"></div>
+  </div>
+
+  <div class="footer">
+    <span>Kaynak: collectAPI · Yatırım tavsiyesi değildir</span>
+    <button class="refresh-btn" id="refresh-btn" onclick="manualRefresh()">↻ YENİLE</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="toast-title" id="toast-title"></div>
+  <div class="toast-msg" id="toast-msg"></div>
+</div>
+
+<script>
+  // Backend kendi localhost'unda çalışıyor, CORS sorunu yok
+  const BASE = 'http://localhost:3000';
+  const prev = {}, cur = {};
+  const unitMap = { gram:'₺', ceyrek:'₺', yarim:'₺', tam:'₺', ons:'$', cumhuriyet:'₺' };
+  const goldNameMap = {
+    'Gram Altın':'gram', 'Çeyrek Altın':'ceyrek', 'Yarım Altın':'yarim',
+    'Tam Altın':'tam', 'ONS Altın':'ons', 'Cumhuriyet Altını':'cumhuriyet'
+  };
+
+  setInterval(() => {
+    document.getElementById('current-time').textContent = new Date().toLocaleTimeString('tr-TR');
+  }, 1000);
+  document.getElementById('current-time').textContent = new Date().toLocaleTimeString('tr-TR');
+
+  function fmt(n, dec=0) {
+    return parseFloat(n).toLocaleString('tr-TR', {minimumFractionDigits:dec, maximumFractionDigits:dec});
+  }
+
+  function setCard(id, buying, selling, prevBuying) {
+    const card = document.getElementById('card-'+id);
+    const buyEl = document.getElementById('buy-'+id);
+    const sellEl = document.getElementById('sell-'+id);
+    const changeEl = document.getElementById('change-'+id);
+    if (!card || !buying) return;
+    const dec = id === 'ons' ? 2 : 0;
+    const sym = unitMap[id];
+    if (buyEl) buyEl.textContent = fmt(buying, dec) + ' ' + sym;
+    if (sellEl) sellEl.textContent = fmt(selling, dec) + ' ' + sym;
+    if (prevBuying) {
+      const diff = buying - prevBuying, pct = (diff/prevBuying*100).toFixed(2), up = diff >= 0;
+      changeEl.textContent = (up?'▲ +':'▼ ')+fmt(Math.abs(diff),dec)+' ('+(up?'+':'')+pct+'%)';
+      changeEl.className = 'card-change '+(up?'up':'down');
+      card.classList.remove('flash-up','flash-down');
+      void card.offsetWidth;
+      card.classList.add(up?'flash-up':'flash-down');
+    }
+  }
+
+  function setDov(id, val, prevVal) {
+    if (!val) return;
+    document.getElementById(id+'-val').textContent = fmt(val, 4);
+    if (prevVal) {
+      const diff = val - prevVal, up = diff >= 0;
+      const el = document.getElementById(id+'-chg');
+      el.textContent = (up?'▲ +':'▼ ')+fmt(Math.abs(diff),4);
+      el.style.color = up ? 'var(--green)' : 'var(--red)';
+    }
+  }
+
+  async function updateAll() {
+    document.getElementById('error-bar').style.display = 'none';
+    try {
+      const res = await fetch(BASE + '/api/prices');
+      const data = await res.json();
+      if (!data.success) throw new Error('Veri alınamadı');
+      const p = data.prices;
+
+      // Altın kartları
+      ['gram','ceyrek','yarim','tam','ons','cumhuriyet'].forEach(key => {
+        if (!p[key]) return;
+        const buying = p[key].buying;
+        const selling = p[key].selling;
+        prev[key] = cur[key];
+        cur[key] = buying;
+        setCard(key, buying, selling, prev[key]);
+      });
+
+      // Döviz
+      if (p.usd) { setDov('usd', p.usd.buying, prev['_usd']); prev['_usd'] = p.usd.buying; }
+      if (p.eur) { setDov('eur', p.eur.buying, prev['_eur']); prev['_eur'] = p.eur.buying; }
+      if (p.gbp) { setDov('gbp', p.gbp.buying, prev['_gbp']); prev['_gbp'] = p.gbp.buying; }
+      if (p.ons) document.getElementById('xau-val').textContent = fmt(p.ons.buying, 2);
+
+      document.getElementById('last-update').textContent = 'Son güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
+      checkAlarms();
+
+    } catch(e) {
+      console.error(e);
+      const bar = document.getElementById('error-bar');
+      bar.style.display = 'block';
+      bar.textContent = '⚠ Sunucuya bağlanılamadı. node server.js çalışıyor mu? — ' + e.message;
+    }
+  }
+
+  // ─── Alarms ───────────────────────────────────────────────────────────
+  let alarms = [], triggered = new Set();
+  const typeLabels = { gram:'Gram', ceyrek:'Çeyrek', yarim:'Yarım', tam:'Tam', ons:'Ons' };
+
+  function addAlarm() {
+    const type = document.getElementById('alarm-type').value;
+    const cond = document.getElementById('alarm-cond').value;
+    const price = parseFloat(document.getElementById('alarm-price').value);
+    if (!price || price <= 0) { showToast('⚠ Hata', 'Geçerli bir fiyat girin.'); return; }
+    const id = Date.now();
+    alarms.push({ id, type, cond, price });
+    document.getElementById('alarm-price').value = '';
+    renderAlarms();
+    showToast('✓ Alarm Eklendi', typeLabels[type]+' '+(cond==='above'?'≥':'≤')+' '+fmt(price));
+  }
+
+  function deleteAlarm(id) { alarms = alarms.filter(a => a.id !== id); triggered.delete(id); renderAlarms(); }
+
+  function renderAlarms() {
+    const list = document.getElementById('alarm-list');
+    if (!alarms.length) { list.innerHTML=''; return; }
+    list.innerHTML = alarms.map(a => `
+      <div class="alarm-item">
+        <div>
+          <div class="alarm-info">${typeLabels[a.type]} ${a.cond==='above'?'↑ üstüne çıkarsa':'↓ altına düşerse'} <strong>${fmt(a.price)}</strong></div>
+          <div class="alarm-meta">${new Date(a.id).toLocaleTimeString('tr-TR')} kuruldu</div>
+        </div>
+        <button class="btn-delete" onclick="deleteAlarm(${a.id})">SİL</button>
+      </div>`).join('');
+  }
+
+  function checkAlarms() {
+    alarms.forEach(a => {
+      if (triggered.has(a.id)) return;
+      const val = cur[a.type]; if (!val) return;
+      if (a.cond==='above' ? val >= a.price : val <= a.price) {
+        triggered.add(a.id);
+        showToast('🔔 ALARM TETİKLENDİ', typeLabels[a.type]+' → '+fmt(val,2));
+        const card = document.getElementById('card-'+a.type);
+        if (card) { card.style.borderColor='var(--gold)'; setTimeout(()=>card.style.borderColor='',4000); }
+      }
+    });
+  }
+
+  let toastTimer;
+  function showToast(title, msg) {
+    clearTimeout(toastTimer);
+    document.getElementById('toast-title').textContent = title;
+    document.getElementById('toast-msg').textContent = msg;
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  function manualRefresh() {
+    const btn = document.getElementById('refresh-btn');
+    btn.classList.add('spinning');
+    updateAll().finally(() => setTimeout(() => btn.classList.remove('spinning'), 600));
+  }
+
+  updateAll();
+  setInterval(updateAll, 60000);
+</script>
+</body>
+</html>

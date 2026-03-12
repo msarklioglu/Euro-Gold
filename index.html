@@ -37,7 +37,7 @@ header{position:relative;z-index:1;padding:28px 32px 28px;display:flex;justify-c
 .card-bs-item{font-size:11px;color:rgba(255,210,100,0.85);font-weight:700;letter-spacing:1px}
 .card-bs-item span{display:block;color:#FFD700;font-size:14px;font-weight:900;margin-top:2px;white-space:nowrap}
 .card-change{font-size:11px;font-weight:700;color:rgba(255,210,100,0.6)}
-.card-change.up{color:#66BB6A}
+.card-change.up{color:#4CAF50}
 .card-change.down{color:#F44336}
 
 @keyframes flashUp{0%,100%{background:rgba(50,25,0,0.65)}40%{background:rgba(30,100,30,0.4)}}
@@ -240,8 +240,8 @@ header{position:relative;z-index:1;padding:28px 32px 28px;display:flex;justify-c
       changeEl.textContent=(up?'▲ +':'▼ ')+fmt(Math.abs(diff),dec)+' ('+(up?'+':'')+pct+'%)';
       changeEl.className='card-change '+(up?'up':'down');
       // Fiyat rengi: yükseliş yeşil, düşüş kırmızı
-      buyEl.style.color=up?'#66BB6A':'#F44336';
-      sellEl.style.color=up?'#66BB6A':'#F44336';
+      buyEl.style.color=up?'#4CAF50':'#F44336';
+      sellEl.style.color=up?'#4CAF50':'#F44336';
       card.classList.remove('flash-up','flash-down');
       void card.offsetWidth;
       card.classList.add(up?'flash-up':'flash-down');

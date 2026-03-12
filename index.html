@@ -76,6 +76,26 @@ header{position:relative;z-index:1;padding:28px 32px 28px;display:flex;justify-c
 .toast.show{transform:translateY(0);opacity:1}
 .toast-title{font-size:13px;font-weight:900;color:#FFD700;margin-bottom:3px}
 .toast-msg{font-size:11px;color:rgba(255,220,120,0.85);font-weight:600}
+
+@media (max-width: 600px) {
+  .logo{font-size:26px}
+  .logo-sub{font-size:9px;letter-spacing:2px}
+  .live-badge{right:16px;top:28px;font-size:10px}
+  header{padding:20px 16px 20px}
+  .timebar{padding:8px 16px;font-size:11px}
+  .content{padding:14px 12px 30px}
+  .cards-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .doviz-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .gold-card{padding:12px}
+  .card-label{font-size:10px}
+  .card-bs-item span{font-size:14px}
+  .alarm-form{flex-direction:column}
+  .form-group select,.form-group input{width:100%}
+}
+@media (max-width: 380px) {
+  .cards-grid{grid-template-columns:1fr}
+  .doviz-grid{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>

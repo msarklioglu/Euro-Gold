@@ -7,267 +7,87 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Pacifico&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',cursive,sans-serif;min-height:100vh;background:#8B6010;overflow-x:hidden;position:relative}
+.galata-bg{position:fixed;inset:0;background-image:url('https://galatagreenlandhotel.com/wp-content/uploads/2025/07/Galata-Tower.webp');background-size:cover;background-position:center;opacity:0.22;z-index:0;pointer-events:none}
+.overlay{position:fixed;inset:0;background:linear-gradient(150deg,rgba(100,65,0,0.72) 0%,rgba(70,40,0,0.78) 100%);z-index:0;pointer-events:none}
 
-body {
-  font-family: 'Nunito', cursive, sans-serif;
-  min-height: 100vh;
-  background-color: #E8D5A0;
-  position: relative;
-  overflow-x: hidden;
-}
+header{position:relative;z-index:1;padding:28px 32px 24px;display:flex;justify-content:center;align-items:center;border-bottom:1px solid rgba(255,210,80,.3)}
+.logo-wrap{text-align:center}
+.logo{font-family:'Pacifico',cursive;font-size:40px;color:#FFD700;text-shadow:2px 3px 8px rgba(0,0,0,0.5);line-height:1.1}
+.logo-sub{font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:rgba(255,220,120,0.9);letter-spacing:3px;text-transform:uppercase;margin-top:8px}
+.live-badge{position:absolute;right:32px;top:36px;display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:rgba(255,220,120,0.9);letter-spacing:2px;text-transform:uppercase}
+.live-dot{width:8px;height:8px;background:#4CAF50;border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 7px #4CAF50}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-.galata-bg {
-  position: fixed; inset: 0;
-  background-image: url('https://galatagreenlandhotel.com/wp-content/uploads/2025/07/Galata-Tower.webp');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.35;
-  z-index: 0;
-  pointer-events: none;
-}
+.timebar{position:relative;z-index:1;padding:10px 32px;display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:rgba(255,220,120,0.8);border-bottom:1px solid rgba(255,210,80,.15)}
+#current-time{color:#FFD700;font-weight:900}
 
-.overlay {
-  position: fixed; inset: 0;
-  background: linear-gradient(150deg, rgba(220,190,100,0.60) 0%, rgba(180,140,50,0.65) 100%);
-  z-index: 0;
-  pointer-events: none;
-}
+.error-bar{margin:12px 32px;background:rgba(183,28,28,.3);border:1px solid rgba(183,28,28,.6);border-radius:8px;padding:10px 14px;font-size:13px;color:#FFCDD2;font-weight:700;display:none;position:relative;z-index:1}
 
-/* BAŞLIK - tam sol üst */
-header {
-  position: relative;
-  z-index: 1;
-  padding: 28px 32px 24px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  border-bottom: 1px solid rgba(255,220,80,.25);
-  position: relative;
-}
+.content{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:20px 24px 40px}
+.section-title{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:rgba(255,220,120,0.85);padding:16px 0 10px}
 
-.logo {
-  font-family: 'Pacifico', cursive;
-  font-size: 38px;
-  color: #F5DFA0;
-  text-shadow: 2px 3px 8px rgba(0,0,0,0.4);
-  line-height: 1;
-}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:8px}
+.gold-card{background:rgba(50,25,0,0.65);border:1px solid rgba(255,200,60,.5);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:transform .2s,border-color .3s}
+.gold-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#FFD700,transparent);opacity:.7}
+.gold-card:hover{transform:translateY(-2px);border-color:rgba(255,200,60,.8)}
 
-.logo span {
-  display: block;
-  font-family: 'Nunito', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-top: 8px;
-}
+.card-label{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:rgba(255,220,120,0.95);margin-bottom:12px}
+.card-bs{display:flex;gap:14px;margin-bottom:6px}
+.card-bs-item{font-size:11px;color:rgba(255,210,100,0.85);font-weight:700;letter-spacing:1px}
+.card-bs-item span{display:block;color:#FFD700;font-size:17px;font-weight:900;margin-top:2px}
+.card-change{font-size:11px;font-weight:700;color:rgba(255,210,100,0.6)}
+.card-change.up{color:#4CAF50}
+.card-change.down{color:#F44336}
 
-.live-badge {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  position: absolute;
-  right: 32px;
-  top: 30px;
-}
+@keyframes flashUp{0%,100%{background:rgba(50,25,0,0.65)}40%{background:rgba(30,100,30,0.4)}}
+@keyframes flashDown{0%,100%{background:rgba(50,25,0,0.65)}40%{background:rgba(150,30,30,0.4)}}
+.flash-up{animation:flashUp .8s ease}
+.flash-down{animation:flashDown .8s ease}
 
-.live-dot {
-  width: 8px; height: 8px;
-  background: #66BB6A;
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-  box-shadow: 0 0 7px #66BB6A;
-}
+.doviz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
+.doviz-card{background:rgba(50,25,0,0.60);border:1px solid rgba(255,200,60,.4);border-radius:10px;padding:12px 14px}
+.doviz-name{font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(255,220,120,0.85);text-transform:uppercase;margin-bottom:4px}
+.doviz-val{font-size:18px;font-weight:900;color:#FFD700}
+.doviz-chg{font-size:11px;font-weight:700;color:rgba(255,210,100,0.6);margin-top:2px}
 
-@keyframes pulse {
-  0%,100%{opacity:1;transform:scale(1)}
-  50%{opacity:.5;transform:scale(.8)}
-}
+.alarm-panel{background:rgba(50,25,0,0.60);border:1px solid rgba(255,200,60,.35);border-radius:14px;padding:20px;margin-top:4px}
+.alarm-title{font-size:14px;font-weight:900;color:#FFD700;margin-bottom:14px}
+.alarm-form{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,220,120,0.8)}
+.form-group select,.form-group input{background:rgba(80,40,0,0.6);border:1px solid rgba(255,200,60,.4);border-radius:7px;padding:7px 10px;color:#FFD700;font-family:'Nunito',cursive;font-size:12px;font-weight:700;outline:none}
+.form-group select option{background:#3D1F00}
+.btn-alarm{background:rgba(255,200,60,.2);border:1px solid rgba(255,200,60,.5);border-radius:7px;padding:8px 16px;color:#FFD700;font-family:'Nunito',cursive;font-size:12px;font-weight:900;cursor:pointer}
+.btn-alarm:hover{background:rgba(255,200,60,.35)}
+.alarm-list{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.alarm-item{display:flex;justify-content:space-between;align-items:center;background:rgba(80,40,0,.4);border-radius:7px;padding:9px 12px;border:1px solid rgba(255,200,60,.2)}
+.alarm-info{font-size:12px;font-weight:700;color:#FFD700}
+.alarm-meta{font-size:10px;color:rgba(255,210,100,0.5);margin-top:2px}
+.btn-delete{background:rgba(183,28,28,.3);border:1px solid rgba(183,28,28,.5);border-radius:6px;padding:4px 9px;color:#FFCDD2;font-family:'Nunito',cursive;font-size:11px;font-weight:700;cursor:pointer}
 
-.timebar {
-  position: relative; z-index: 1;
-  padding: 10px 32px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.75);
-  border-bottom: 1px solid rgba(255,220,80,.12);
-}
+.footer{display:flex;justify-content:flex-end;padding:16px 0 0}
+.refresh-btn{background:rgba(255,200,60,.15);border:1px solid rgba(255,200,60,.35);border-radius:7px;padding:7px 16px;color:#FFD700;font-family:'Nunito',cursive;font-size:12px;font-weight:700;cursor:pointer}
+.refresh-btn:hover{background:rgba(255,200,60,.28)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinning{animation:spin .6s linear}
 
-#current-time { color: #F5DFA0; font-weight: 700; }
-
-.error-bar {
-  margin: 12px 32px;
-  background: rgba(183,28,28,.25);
-  border: 1px solid rgba(183,28,28,.5);
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 13px;
-  color: #FFCDD2;
-  font-weight: 600;
-  display: none;
-  position: relative; z-index: 1;
-}
-
-/* ORTA İÇERİK */
-.content {
-  position: relative; z-index: 1;
-  max-width: 740px;
-  margin: 0 auto;
-  padding: 20px 24px 40px;
-}
-
-.section-title {
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #FFFFFF;
-  padding: 16px 0 10px;
-}
-
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 8px;
-}
-
-.gold-card {
-  background: rgba(255,245,200,0.22);
-  border: 1px solid rgba(220,180,60,.55);
-  border-radius: 14px;
-  padding: 16px;
-  position: relative;
-  overflow: hidden;
-  transition: transform .2s, border-color .3s;
-}
-
-.gold-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, #FFE066, transparent);
-  opacity: .5;
-}
-
-.gold-card:hover { transform: translateY(-2px); border-color: rgba(255,220,80,.55); }
-
-.card-label {
-  font-size: 11px; font-weight: 900;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: #FFFFFF;
-  margin-bottom: 12px;
-}
-
-.card-bs { display: flex; gap: 14px; margin-bottom: 6px; }
-
-.card-bs-item {
-  font-size: 11px; color: #FFFFFF;
-  font-weight: 700; letter-spacing: 1px;
-}
-
-.card-bs-item span {
-  display: block; color: #F5DFA0;
-  font-size: 16px; font-weight: 900; margin-top: 2px;
-}
-
-.card-change { font-size: 11px; font-weight: 700; color: rgba(255,230,150,0.5); }
-.card-change.up { color: #A5D6A7; }
-.card-change.down { color: #EF9A9A; }
-
-@keyframes flashUp { 0%,100%{background:rgba(255,240,180,.14)} 40%{background:rgba(100,200,100,.18)} }
-@keyframes flashDown { 0%,100%{background:rgba(255,240,180,.14)} 40%{background:rgba(200,80,80,.18)} }
-.flash-up { animation: flashUp .8s ease; }
-.flash-down { animation: flashDown .8s ease; }
-
-.doviz-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-.doviz-card {
-  background: rgba(255,245,200,0.18);
-  border: 1px solid rgba(220,180,60,.45);
-  border-radius: 10px;
-  padding: 12px 14px;
-}
-
-.doviz-name { font-size: 10px; font-weight: 900; letter-spacing: 2px; color: #FFFFFF; text-transform: uppercase; margin-bottom: 4px; }
-.doviz-val { font-size: 18px; font-weight: 900; color: #F5DFA0; }
-.doviz-chg { font-size: 11px; font-weight: 700; color: rgba(255,230,150,0.5); margin-top: 2px; }
-
-.alarm-panel {
-  background: rgba(255,245,200,0.18);
-  border: 1px solid rgba(220,180,60,.45);
-  border-radius: 14px;
-  padding: 20px;
-  margin-top: 4px;
-}
-
-.alarm-title { font-size: 14px; font-weight: 900; color: #F5DFA0; margin-bottom: 14px; }
-.alarm-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
-.form-group { display: flex; flex-direction: column; gap: 5px; }
-.form-group label { font-size: 10px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: #FFFFFF; }
-.form-group select, .form-group input {
-  background: rgba(255,240,180,0.12);
-  border: 1px solid rgba(255,220,80,.35);
-  border-radius: 7px; padding: 7px 10px;
-  color: #F5DFA0; font-family: 'Nunito', cursive;
-  font-size: 12px; font-weight: 700; outline: none;
-}
-.form-group select option { background: #6B4A10; }
-.btn-alarm {
-  background: rgba(255,220,80,.18);
-  border: 1px solid rgba(255,220,80,.4);
-  border-radius: 7px; padding: 8px 16px;
-  color: #F5DFA0; font-family: 'Nunito', cursive;
-  font-size: 12px; font-weight: 900; cursor: pointer;
-}
-.btn-alarm:hover { background: rgba(255,220,80,.32); }
-.alarm-list { margin-top: 12px; display: flex; flex-direction: column; gap: 7px; }
-.alarm-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,240,180,.08); border-radius: 7px; padding: 9px 12px; border: 1px solid rgba(255,220,80,.16); }
-.alarm-info { font-size: 12px; font-weight: 700; color: #F5DFA0; }
-.alarm-meta { font-size: 10px; color: rgba(255,230,150,0.45); margin-top: 2px; }
-.btn-delete { background: rgba(183,28,28,.25); border: 1px solid rgba(183,28,28,.4); border-radius: 6px; padding: 4px 9px; color: #FFCDD2; font-family: 'Nunito', cursive; font-size: 11px; font-weight: 700; cursor: pointer; }
-
-.footer { display: flex; justify-content: flex-end; padding: 16px 0 0; }
-.refresh-btn { background: rgba(255,240,180,.10); border: 1px solid rgba(255,220,80,.6); border-radius: 7px; padding: 7px 16px; color: #F5DFA0; font-family: 'Nunito', cursive; font-size: 12px; font-weight: 700; cursor: pointer; }
-.refresh-btn:hover { background: rgba(255,220,80,.22); }
-@keyframes spin { to { transform: rotate(360deg); } }
-.spinning { animation: spin .6s linear; }
-
-.toast { position: fixed; bottom: 20px; right: 20px; background: rgba(80,40,0,.95); border: 1px solid rgba(255,220,80,.4); border-radius: 10px; padding: 14px 18px; min-width: 220px; z-index: 9999; transform: translateY(70px); opacity: 0; transition: all .3s ease; }
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast-title { font-size: 13px; font-weight: 900; color: #F5DFA0; margin-bottom: 3px; }
-.toast-msg { font-size: 11px; color: rgba(255,230,150,0.8); font-weight: 600; }
+.toast{position:fixed;bottom:20px;right:20px;background:rgba(50,25,0,.97);border:1px solid rgba(255,200,60,.5);border-radius:10px;padding:14px 18px;min-width:220px;z-index:9999;transform:translateY(70px);opacity:0;transition:all .3s ease}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-title{font-size:13px;font-weight:900;color:#FFD700;margin-bottom:3px}
+.toast-msg{font-size:11px;color:rgba(255,220,120,0.85);font-weight:600}
 </style>
 </head>
 <body>
-
 <div class="galata-bg"></div>
 <div class="overlay"></div>
 
-<!-- BAŞLIK: tam sol üst -->
 <header>
-  <div style="text-align:center;">
+  <div class="logo-wrap">
     <div class="logo">Euro Gold</div>
-    <div style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:rgba(255,230,150,0.7);letter-spacing:3px;text-transform:uppercase;margin-top:10px;">Gerçek Zamanlı Kapalı Çarşı Fiyatları</div>
+    <div class="logo-sub">Gerçek Zamanlı Kapalı Çarşı Fiyatları</div>
   </div>
-  <div class="live-badge">
-    <div class="live-dot"></div>
-    Canlı
-  </div>
+  <div class="live-badge"><div class="live-dot"></div>Canlı</div>
 </header>
 
 <div class="timebar">
@@ -277,9 +97,7 @@ header {
 
 <div class="error-bar" id="error-bar"></div>
 
-<!-- KARTLAR: ortalanmış -->
 <div class="content">
-
   <div class="section-title">Altın Fiyatları</div>
   <div class="cards-grid">
     <div class="gold-card" id="card-gram">
@@ -334,34 +152,17 @@ header {
 
   <div class="section-title">Döviz Kurları</div>
   <div class="doviz-grid">
-    <div class="doviz-card">
-      <div class="doviz-name">USD / TRY</div>
-      <div class="doviz-val" id="usd-val">—</div>
-      <div class="doviz-chg" id="usd-chg">—</div>
-    </div>
-    <div class="doviz-card">
-      <div class="doviz-name">EUR / TRY</div>
-      <div class="doviz-val" id="eur-val">—</div>
-      <div class="doviz-chg" id="eur-chg">—</div>
-    </div>
-    <div class="doviz-card">
-      <div class="doviz-name">GBP / TRY</div>
-      <div class="doviz-val" id="gbp-val">—</div>
-      <div class="doviz-chg" id="gbp-chg">—</div>
-    </div>
-    <div class="doviz-card">
-      <div class="doviz-name">ONS / USD</div>
-      <div class="doviz-val" id="xau-val">—</div>
-      <div class="doviz-chg" id="xau-chg">—</div>
-    </div>
+    <div class="doviz-card"><div class="doviz-name">USD / TRY</div><div class="doviz-val" id="usd-val">—</div><div class="doviz-chg" id="usd-chg">—</div></div>
+    <div class="doviz-card"><div class="doviz-name">EUR / TRY</div><div class="doviz-val" id="eur-val">—</div><div class="doviz-chg" id="eur-chg">—</div></div>
+    <div class="doviz-card"><div class="doviz-name">GBP / TRY</div><div class="doviz-val" id="gbp-val">—</div><div class="doviz-chg" id="gbp-chg">—</div></div>
+    <div class="doviz-card"><div class="doviz-name">ONS / USD</div><div class="doviz-val" id="xau-val">—</div><div class="doviz-chg" id="xau-chg">—</div></div>
   </div>
 
   <div class="section-title">Fiyat Alarmı</div>
   <div class="alarm-panel">
     <div class="alarm-title">🔔 Alarm Kur</div>
     <div class="alarm-form">
-      <div class="form-group">
-        <label>Altın Türü</label>
+      <div class="form-group"><label>Altın Türü</label>
         <select id="alarm-type">
           <option value="gram">Gram Altın</option>
           <option value="ceyrek">Çeyrek Altın</option>
@@ -370,15 +171,13 @@ header {
           <option value="ons">Ons Altın</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Koşul</label>
+      <div class="form-group"><label>Koşul</label>
         <select id="alarm-cond">
           <option value="above">Üstüne çıkarsa</option>
           <option value="below">Altına düşerse</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Hedef Fiyat</label>
+      <div class="form-group"><label>Hedef Fiyat</label>
         <input type="number" id="alarm-price" placeholder="örn: 3500" step="1">
       </div>
       <button class="btn-alarm" onclick="addAlarm()">Alarm Ekle</button>
@@ -389,7 +188,6 @@ header {
   <div class="footer">
     <button class="refresh-btn" id="refresh-btn" onclick="manualRefresh()">↻ Yenile</button>
   </div>
-
 </div>
 
 <div class="toast" id="toast">
@@ -400,97 +198,94 @@ header {
 <script>
   const BASE = '';
   const prev = {}, cur = {};
-  const unitMap = { gram:'₺', ceyrek:'₺', yarim:'₺', tam:'₺', ons:'$', cumhuriyet:'₺' };
+  const unitMap = {gram:'₺',ceyrek:'₺',yarim:'₺',tam:'₺',ons:'$',cumhuriyet:'₺'};
 
-  setInterval(() => {
-    document.getElementById('current-time').textContent = new Date().toLocaleTimeString('tr-TR');
-  }, 1000);
-  document.getElementById('current-time').textContent = new Date().toLocaleTimeString('tr-TR');
+  setInterval(()=>{document.getElementById('current-time').textContent=new Date().toLocaleTimeString('tr-TR')},1000);
+  document.getElementById('current-time').textContent=new Date().toLocaleTimeString('tr-TR');
 
-  function fmt(n, dec=0) {
-    return parseFloat(n).toLocaleString('tr-TR', {minimumFractionDigits:dec, maximumFractionDigits:dec});
-  }
+  function fmt(n,dec=0){return parseFloat(n).toLocaleString('tr-TR',{minimumFractionDigits:dec,maximumFractionDigits:dec})}
 
-  function setCard(id, buying, selling, prevBuying) {
-    const card = document.getElementById('card-'+id);
-    const buyEl = document.getElementById('buy-'+id);
-    const sellEl = document.getElementById('sell-'+id);
-    const changeEl = document.getElementById('change-'+id);
-    if (!card || !buying) return;
-    const dec = id === 'ons' ? 2 : 0;
-    const sym = unitMap[id];
-    if (buyEl) buyEl.textContent = fmt(buying, dec) + ' ' + sym;
-    if (sellEl) sellEl.textContent = fmt(selling, dec) + ' ' + sym;
-    if (prevBuying) {
-      const diff = buying - prevBuying, pct = (diff/prevBuying*100).toFixed(2), up = diff >= 0;
-      changeEl.textContent = (up?'▲ +':'▼ ')+fmt(Math.abs(diff),dec)+' ('+(up?'+':'')+pct+'%)';
-      changeEl.className = 'card-change '+(up?'up':'down');
+  function setCard(id,buying,selling,prevBuying){
+    const card=document.getElementById('card-'+id);
+    const buyEl=document.getElementById('buy-'+id);
+    const sellEl=document.getElementById('sell-'+id);
+    const changeEl=document.getElementById('change-'+id);
+    if(!card||!buying)return;
+    const dec=id==='ons'?2:0;
+    const sym=unitMap[id];
+    if(buyEl)buyEl.textContent=fmt(buying,dec)+' '+sym;
+    if(sellEl)sellEl.textContent=fmt(selling,dec)+' '+sym;
+    if(prevBuying){
+      const diff=buying-prevBuying,pct=(diff/prevBuying*100).toFixed(2),up=diff>=0;
+      changeEl.textContent=(up?'▲ +':'▼ ')+fmt(Math.abs(diff),dec)+' ('+(up?'+':'')+pct+'%)';
+      changeEl.className='card-change '+(up?'up':'down');
+      // Fiyat rengi: yükseliş yeşil, düşüş kırmızı
+      buyEl.style.color=up?'#4CAF50':'#F44336';
+      sellEl.style.color=up?'#4CAF50':'#F44336';
       card.classList.remove('flash-up','flash-down');
       void card.offsetWidth;
       card.classList.add(up?'flash-up':'flash-down');
-      buyEl.style.color = up ? '#A5D6A7' : '#EF9A9A';
-      sellEl.style.color = up ? '#A5D6A7' : '#EF9A9A';
     }
   }
 
-  function setDov(id, val, prevVal) {
-    if (!val) return;
-    document.getElementById(id+'-val').textContent = fmt(val, 4);
-    if (prevVal) {
-      const diff = val - prevVal, up = diff >= 0;
-      const el = document.getElementById(id+'-chg');
-      el.textContent = (up?'▲ +':'▼ ')+fmt(Math.abs(diff),4);
-      el.style.color = up ? '#A5D6A7' : '#EF9A9A';
+  function setDov(id,val,prevVal){
+    if(!val)return;
+    document.getElementById(id+'-val').textContent=fmt(val,4);
+    if(prevVal){
+      const diff=val-prevVal,up=diff>=0;
+      const el=document.getElementById(id+'-chg');
+      el.textContent=(up?'▲ +':'▼ ')+fmt(Math.abs(diff),4);
+      el.style.color=up?'#4CAF50':'#F44336';
     }
   }
 
-  async function updateAll() {
-    document.getElementById('error-bar').style.display = 'none';
-    try {
-      const res = await fetch(BASE + '/api/prices');
-      const data = await res.json();
-      if (!data.success) throw new Error('Veri alınamadı');
-      const p = data.prices;
-      ['gram','ceyrek','yarim','tam','ons','cumhuriyet'].forEach(key => {
-        if (!p[key]) return;
-        prev[key] = cur[key];
-        cur[key] = p[key].buying;
-        setCard(key, p[key].buying, p[key].selling, prev[key]);
+  async function updateAll(){
+    document.getElementById('error-bar').style.display='none';
+    try{
+      const res=await fetch(BASE+'/api/prices');
+      const data=await res.json();
+      if(!data.success)throw new Error('Veri alınamadı');
+      const p=data.prices;
+      ['gram','ceyrek','yarim','tam','ons','cumhuriyet'].forEach(key=>{
+        if(!p[key])return;
+        prev[key]=cur[key];
+        cur[key]=p[key].buying;
+        setCard(key,p[key].buying,p[key].selling,prev[key]);
       });
-      if (p.usd) { setDov('usd', p.usd.buying, prev['_usd']); prev['_usd'] = p.usd.buying; }
-      if (p.eur) { setDov('eur', p.eur.buying, prev['_eur']); prev['_eur'] = p.eur.buying; }
-      if (p.gbp) { setDov('gbp', p.gbp.buying, prev['_gbp']); prev['_gbp'] = p.gbp.buying; }
-      if (p.ons) document.getElementById('xau-val').textContent = fmt(p.ons.buying, 2);
-      document.getElementById('last-update').textContent = 'Son güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
+      if(p.usd){setDov('usd',p.usd.buying,prev['_usd']);prev['_usd']=p.usd.buying;}
+      if(p.eur){setDov('eur',p.eur.buying,prev['_eur']);prev['_eur']=p.eur.buying;}
+      if(p.gbp){setDov('gbp',p.gbp.buying,prev['_gbp']);prev['_gbp']=p.gbp.buying;}
+      if(p.ons)document.getElementById('xau-val').textContent=fmt(p.ons.buying,2);
+      document.getElementById('last-update').textContent='Son güncelleme: '+new Date().toLocaleTimeString('tr-TR');
       checkAlarms();
-    } catch(e) {
-      const bar = document.getElementById('error-bar');
-      bar.style.display = 'block';
-      bar.textContent = '⚠ Sunucuya bağlanılamadı — ' + e.message;
+    }catch(e){
+      const bar=document.getElementById('error-bar');
+      bar.style.display='block';
+      bar.textContent='⚠ Sunucuya bağlanılamadı — '+e.message;
     }
   }
 
-  let alarms = [], triggered = new Set();
-  const typeLabels = { gram:'Gram', ceyrek:'Çeyrek', yarim:'Yarım', tam:'Tam', ons:'Ons' };
+  let alarms=[],triggered=new Set();
+  const typeLabels={gram:'Gram',ceyrek:'Çeyrek',yarim:'Yarım',tam:'Tam',ons:'Ons'};
 
-  function addAlarm() {
-    const type = document.getElementById('alarm-type').value;
-    const cond = document.getElementById('alarm-cond').value;
-    const price = parseFloat(document.getElementById('alarm-price').value);
-    if (!price || price <= 0) { showToast('⚠ Hata', 'Geçerli bir fiyat girin.'); return; }
-    const id = Date.now();
-    alarms.push({ id, type, cond, price });
-    document.getElementById('alarm-price').value = '';
+  function addAlarm(){
+    const type=document.getElementById('alarm-type').value;
+    const cond=document.getElementById('alarm-cond').value;
+    const price=parseFloat(document.getElementById('alarm-price').value);
+    if(!price||price<=0){showToast('⚠ Hata','Geçerli bir fiyat girin.');return;}
+    const id=Date.now();
+    alarms.push({id,type,cond,price});
+    document.getElementById('alarm-price').value='';
     renderAlarms();
-    showToast('✓ Alarm Eklendi', typeLabels[type]+' '+(cond==='above'?'≥':'≤')+' '+fmt(price));
+    showToast('✓ Alarm Eklendi',typeLabels[type]+' '+(cond==='above'?'≥':'≤')+' '+fmt(price));
   }
 
-  function deleteAlarm(id) { alarms = alarms.filter(a => a.id !== id); triggered.delete(id); renderAlarms(); }
+  function deleteAlarm(id){alarms=alarms.filter(a=>a.id!==id);triggered.delete(id);renderAlarms();}
 
-  function renderAlarms() {
-    const list = document.getElementById('alarm-list');
-    if (!alarms.length) { list.innerHTML=''; return; }
-    list.innerHTML = alarms.map(a => `
+  function renderAlarms(){
+    const list=document.getElementById('alarm-list');
+    if(!alarms.length){list.innerHTML='';return;}
+    list.innerHTML=alarms.map(a=>`
       <div class="alarm-item">
         <div>
           <div class="alarm-info">${typeLabels[a.type]} ${a.cond==='above'?'↑ üstüne çıkarsa':'↓ altına düşerse'} <strong>${fmt(a.price)}</strong></div>
@@ -500,37 +295,37 @@ header {
       </div>`).join('');
   }
 
-  function checkAlarms() {
-    alarms.forEach(a => {
-      if (triggered.has(a.id)) return;
-      const val = cur[a.type]; if (!val) return;
-      if (a.cond==='above' ? val >= a.price : val <= a.price) {
+  function checkAlarms(){
+    alarms.forEach(a=>{
+      if(triggered.has(a.id))return;
+      const val=cur[a.type];if(!val)return;
+      if(a.cond==='above'?val>=a.price:val<=a.price){
         triggered.add(a.id);
-        showToast('🔔 ALARM!', typeLabels[a.type]+' → '+fmt(val,2));
-        const card = document.getElementById('card-'+a.type);
-        if (card) { card.style.borderColor='#FFE066'; setTimeout(()=>card.style.borderColor='',4000); }
+        showToast('🔔 ALARM!',typeLabels[a.type]+' → '+fmt(val,2));
+        const card=document.getElementById('card-'+a.type);
+        if(card){card.style.borderColor='#FFD700';setTimeout(()=>card.style.borderColor='',4000);}
       }
     });
   }
 
   let toastTimer;
-  function showToast(title, msg) {
+  function showToast(title,msg){
     clearTimeout(toastTimer);
-    document.getElementById('toast-title').textContent = title;
-    document.getElementById('toast-msg').textContent = msg;
-    const t = document.getElementById('toast');
+    document.getElementById('toast-title').textContent=title;
+    document.getElementById('toast-msg').textContent=msg;
+    const t=document.getElementById('toast');
     t.classList.add('show');
-    toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+    toastTimer=setTimeout(()=>t.classList.remove('show'),3500);
   }
 
-  function manualRefresh() {
-    const btn = document.getElementById('refresh-btn');
+  function manualRefresh(){
+    const btn=document.getElementById('refresh-btn');
     btn.classList.add('spinning');
-    updateAll().finally(() => setTimeout(() => btn.classList.remove('spinning'), 600));
+    updateAll().finally(()=>setTimeout(()=>btn.classList.remove('spinning'),600));
   }
 
   updateAll();
-  setInterval(updateAll, 60000);
+  setInterval(updateAll,60000);
 </script>
 </body>
 </html>

@@ -42,16 +42,22 @@
     pointer-events: none;
   }
 
+  .header-wrap {
+    max-width: 100%;
+    padding: 28px 40px 0;
+    position: relative;
+    z-index: 1;
+  }
   .container {
-    max-width: 700px;
+    max-width: 750px;
     margin: 0 auto;
-    padding: 0 32px;
+    padding: 0 24px;
     position: relative;
     z-index: 1;
   }
 
   header {
-    padding: 36px 0 28px;
+    padding: 0 0 20px;
     border-bottom: 1px solid rgba(255,220,100,.3);
     display: flex;
     justify-content: space-between;
@@ -350,9 +356,7 @@
 <div class="galata-bg"></div>
 <div class="overlay"></div>
 
-<div class="container">
-
-  <header>
+<div class="header-wrap"><header>
     <div class="logo">
       Euro Gold
       <span>Gerçek Zamanlı Kapalı Çarşı Fiyatları</span>
@@ -361,8 +365,9 @@
       <div class="live-dot"></div>
       Canlı
     </div>
-  </header>
+  </header></div>
 
+<div class="container">
   <div class="time-bar">
     <span id="last-update">Veri yükleniyor...</span>
     <span id="current-time"></span>

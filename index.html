@@ -11,10 +11,10 @@ body{font-family:'Nunito',cursive,sans-serif;min-height:100vh;background:#8B6010
 .galata-bg{position:fixed;inset:0;background-image:url('https://galatagreenlandhotel.com/wp-content/uploads/2025/07/Galata-Tower.webp');background-size:cover;background-position:center;opacity:0.22;z-index:0;pointer-events:none}
 .overlay{position:fixed;inset:0;background:linear-gradient(150deg,rgba(100,65,0,0.72) 0%,rgba(70,40,0,0.78) 100%);z-index:0;pointer-events:none}
 
-header{position:relative;z-index:1;padding:28px 32px 24px;display:flex;justify-content:center;align-items:center;border-bottom:1px solid rgba(255,210,80,.3)}
+header{position:relative;z-index:1;padding:28px 32px 28px;display:flex;justify-content:center;align-items:center;border-bottom:1px solid rgba(255,210,80,.3);min-height:110px}
 .logo-wrap{text-align:center}
-.logo{font-family:'Pacifico',cursive;font-size:40px;color:#FFD700;text-shadow:2px 3px 8px rgba(0,0,0,0.5);line-height:1.1}
-.logo-sub{font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:rgba(255,220,120,0.9);letter-spacing:3px;text-transform:uppercase;margin-top:8px}
+.logo{font-family:'Pacifico',cursive;font-size:34px;color:#FFD700;text-shadow:2px 3px 8px rgba(0,0,0,0.5);line-height:1.1}
+.logo-sub{font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:rgba(255,220,120,0.9);letter-spacing:3px;text-transform:uppercase;margin-top:12px;display:block}
 .live-badge{position:absolute;right:32px;top:36px;display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:rgba(255,220,120,0.9);letter-spacing:2px;text-transform:uppercase}
 .live-dot{width:8px;height:8px;background:#4CAF50;border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 7px #4CAF50}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
@@ -35,9 +35,9 @@ header{position:relative;z-index:1;padding:28px 32px 24px;display:flex;justify-c
 .card-label{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:rgba(255,220,120,0.95);margin-bottom:12px}
 .card-bs{display:flex;gap:14px;margin-bottom:6px}
 .card-bs-item{font-size:11px;color:rgba(255,210,100,0.85);font-weight:700;letter-spacing:1px}
-.card-bs-item span{display:block;color:#FFD700;font-size:17px;font-weight:900;margin-top:2px}
+.card-bs-item span{display:block;color:#3E1F00;font-size:17px;font-weight:900;margin-top:2px}
 .card-change{font-size:11px;font-weight:700;color:rgba(255,210,100,0.6)}
-.card-change.up{color:#4CAF50}
+.card-change.up{color:#1B5E20}
 .card-change.down{color:#F44336}
 
 @keyframes flashUp{0%,100%{background:rgba(50,25,0,0.65)}40%{background:rgba(30,100,30,0.4)}}
@@ -48,7 +48,7 @@ header{position:relative;z-index:1;padding:28px 32px 24px;display:flex;justify-c
 .doviz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
 .doviz-card{background:rgba(50,25,0,0.60);border:1px solid rgba(255,200,60,.4);border-radius:10px;padding:12px 14px}
 .doviz-name{font-size:10px;font-weight:900;letter-spacing:2px;color:rgba(255,220,120,0.85);text-transform:uppercase;margin-bottom:4px}
-.doviz-val{font-size:18px;font-weight:900;color:#FFD700}
+.doviz-val{font-size:18px;font-weight:900;color:#3E1F00}
 .doviz-chg{font-size:11px;font-weight:700;color:rgba(255,210,100,0.6);margin-top:2px}
 
 .alarm-panel{background:rgba(50,25,0,0.60);border:1px solid rgba(255,200,60,.35);border-radius:14px;padding:20px;margin-top:4px}
@@ -220,8 +220,8 @@ header{position:relative;z-index:1;padding:28px 32px 24px;display:flex;justify-c
       changeEl.textContent=(up?'▲ +':'▼ ')+fmt(Math.abs(diff),dec)+' ('+(up?'+':'')+pct+'%)';
       changeEl.className='card-change '+(up?'up':'down');
       // Fiyat rengi: yükseliş yeşil, düşüş kırmızı
-      buyEl.style.color=up?'#4CAF50':'#F44336';
-      sellEl.style.color=up?'#4CAF50':'#F44336';
+      buyEl.style.color=up?'#1B5E20':'#F44336';
+      sellEl.style.color=up?'#1B5E20':'#F44336';
       card.classList.remove('flash-up','flash-down');
       void card.offsetWidth;
       card.classList.add(up?'flash-up':'flash-down');

@@ -21,14 +21,14 @@ body {
   background-image: url('https://galatagreenlandhotel.com/wp-content/uploads/2025/07/Galata-Tower.webp');
   background-size: cover;
   background-position: center;
-  opacity: 0.10;
+  opacity: 0.35;
   z-index: 0;
   pointer-events: none;
 }
 
 .overlay {
   position: fixed; inset: 0;
-  background: linear-gradient(150deg, rgba(195,155,50,0.80) 0%, rgba(150,105,10,0.86) 100%);
+  background: linear-gradient(150deg, rgba(195,155,50,0.55) 0%, rgba(150,105,10,0.62) 100%);
   z-index: 0;
   pointer-events: none;
 }
@@ -39,9 +39,10 @@ header {
   z-index: 1;
   padding: 24px 32px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   border-bottom: 1px solid rgba(255,220,80,.25);
+  position: relative;
 }
 
 .logo {
@@ -72,7 +73,9 @@ header {
   color: rgba(255,230,150,0.9);
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-top: 6px;
+  position: absolute;
+  right: 32px;
+  top: 30px;
 }
 
 .live-dot {

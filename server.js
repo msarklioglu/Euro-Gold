@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { WebSocket } = require('ws');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ─── ID → altın eşleştirmesi ──────────────────────────────────────────────
 const GOLD_IDS = {

@@ -344,8 +344,38 @@ header{position:relative;z-index:1;padding:28px 32px 28px;display:flex;justify-c
     updateAll().finally(()=>setTimeout(()=>btn.classList.remove('spinning'),600));
   }
 
+  // İlk yüklemede fiyatları al
   updateAll();
-  setInterval(updateAll,60000);
+
+  // WebSocket ile anlık güncellemeler
+  function connectLive() {
+    const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(proto + '//' + location.host + '/ws');
+
+    ws.onmessage = (e) => {
+      const msg = JSON.parse(e.data);
+      if (msg.type === 'init' || msg.type === 'update') {
+        const p = msg.prices;
+        ['gram','ceyrek','yarim','tam','ons','cumhuriyet'].forEach(key => {
+          if (!p[key]) return;
+          prev[key] = cur[key];
+          cur[key] = p[key].buying;
+          setCard(key, p[key].buying, p[key].selling, prev[key]);
+        });
+        if (p.usd) { setDov('usd', p.usd.buying, prev['_usd']); prev['_usd'] = p.usd.buying; }
+        if (p.eur) { setDov('eur', p.eur.buying, prev['_eur']); prev['_eur'] = p.eur.buying; }
+        if (p.gbp) { setDov('gbp', p.gbp.buying, prev['_gbp']); prev['_gbp'] = p.gbp.buying; }
+        if (p.ons) document.getElementById('xau-val').textContent = fmt(p.ons.buying, 2);
+        document.getElementById('last-update').textContent = 'Son güncelleme: ' + new Date().toLocaleTimeString('tr-TR');
+        checkAlarms();
+      }
+    };
+
+    ws.onclose = () => setTimeout(connectLive, 3000);
+    ws.onerror = () => ws.close();
+  }
+
+  connectLive();
 </script>
 </body>
 </html>
